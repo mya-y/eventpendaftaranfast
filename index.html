@@ -224,6 +224,7 @@
 .info-finalis strong { color: var(--navy); font-size: 15px; }
 .info-finalis p { color: var(--abu); font-size: 14px; margin-top: 4px; }
 .peserta .kat { font-size: 12px; font-weight: 700; color: var(--biru-tua); text-transform: uppercase; letter-spacing: .4px; margin-bottom: 4px; }
+.peserta .kat { font-size: 12px; font-weight: 700; color: var(--biru-tua); text-transform: uppercase; letter-spacing: .4px; margin-bottom: 4px; }
 
 </style>
 </head>
@@ -261,11 +262,10 @@
 <!-- ===== PENGUMUMAN (di atas timeline) ===== -->
 <section id="pengumuman">
   <div class="badge-baru">Pengumuman Resmi</div>
-  <h2 class="judul reveal" style="margin-top:4px">🏆 Pengumuman Finalis</h2>
-
-  <div class="info-finalis reveal">
-    <strong>Pemberitahuan Finalis</strong>
-    <p>Peserta Yang Lolos ke Tahap Finalis, Silahkan Periksa Email Yang Didaftarkan untuk informasi selanjutnya dan bergabung ke grup finalis.</p>
+  <h2 class="judul reveal" style="margin-top:4px">🏆 Pengumuman Juara</h2>
+  <div class="info-finalis reveal"
+  <strong>sertifikat</strong>
+    <p>Sertifikat untuk seluruh peserta dan juara akan dibagikan melalui email yang didaftarkan. Mohon agar mengecek email masing - masing secara berkala.</p>
   </div>
   <div class="pengumuman-wrap reveal">
     <div id="daftarPengumuman"><div class="status-umum">Memuat pengumuman...</div></div>
@@ -587,24 +587,24 @@
   function urutanPeringkat(p) {
     return { "Juara 1": 1, "Juara 2": 2, "Juara 3": 3 }[p.peringkat] || 9;
   }
-  function kartuPeserta(p) {
-    const id = idDrive(p.poster);
-    const label = p.tahap === "Juara" && p.peringkat ? p.peringkat : "Finalis";
-    const kelas = { "Juara 1": "juara-1", "Juara 2": "juara-2", "Juara 3": "juara-3" }[p.peringkat] || "";
-    const tombol = id
-      ? `<div class="aksi-poster">
-           <a class="lihat" href="https://drive.google.com/file/d/${esc(id)}/view" target="_blank" rel="noopener">Lihat Poster</a>
-           <a class="unduh" href="https://drive.google.com/uc?export=download&id=${esc(id)}" target="_blank" rel="noopener">Unduh PDF</a>
-         </div>`
-      : "";
-    return `<div class="peserta ${kelas}">
-      <span class="lencana">${esc(label)}</span>
-      <div class="nm">${esc(p.nama)}</div>
-      <div class="meta">${esc(p.kampus)} · NIM ${esc(p.nim)}</div>
-      <div class="jdl">${esc(p.judul)}</div>
-      ${tombol}
-    </div>`;
-  }
+ function kartuPeserta(p) {
+  const id = idDrive(p.poster);
+  const kelas = { "Juara 1": "juara-1", "Juara 2": "juara-2", "Juara 3": "juara-3" }[p.peringkat] || "";
+  const tombol = id
+    ? `<div class="aksi-poster">
+         <a class="lihat" href="https://drive.google.com/file/d/${esc(id)}/view" target="_blank" rel="noopener">Lihat Poster</a>
+         <a class="unduh" href="https://drive.google.com/uc?export=download&id=${esc(id)}" target="_blank" rel="noopener">Unduh PDF</a>
+       </div>`
+    : "";
+  return `<div class="peserta ${kelas}">
+    <span class="lencana">${esc(p.peringkat)}</span>
+    <div class="kat">${esc(p.kategori)}</div>
+    <div class="nm">${esc(p.nama)}</div>
+    <div class="meta">${esc(p.kampus)} · NIM ${esc(p.nim)}</div>
+    <div class="jdl">${esc(p.judul)}</div>
+    ${tombol}
+  </div>`;
+}
   function renderPengumuman() {
     const box = document.getElementById("daftarPengumuman");
     if (dataPengumuman === null) {
@@ -614,8 +614,8 @@
     if (dataPengumuman.length === 0) {
       box.innerHTML = `
         <div class="teaser">
-          <strong>Pengumuman finalis dijadwalkan 6 November 2026</strong>
-          <p>Daftar finalis dan juara per kategori akan tampil di sini.</p>
+          <strong>Pengumuman juara akan ditampilkan di sini.6</strong>
+          <p>Daftar juara per kategori akan tampil di sini.</p>
         </div>`;
       return;
     }
